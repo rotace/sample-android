@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">TutorialSplitCost</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- AndroidManifest -->
+    <string name="setting_name">設定</string>
+
+    <!-- layout.content_main -->
+    <string name="hello_world">Hello world!</string>
+    <string name="numPeople">人数：</string>
+    <string name="people">人</string>
+    <string name="money">金額：</string>
+    <string name="yen">円</string>
+    <string name="calc">計算</string>
+    <string name="oneMoney">一人あたりの金額</string>
+    <string name="result">0</string>
+
+    <!-- xml.setting_pref -->
+    <string name="fraction_title">端数</string>
+    <string name="dlg_fraction_title">端数を選択してください</string>
+    <string name="roundup_title">端数切り上げ</string>
+    <string-array name="list_fraction">
+        <item>1</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
+    <string-array name="list_fraction_val">
+        <item>1</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
+
+</resources>
