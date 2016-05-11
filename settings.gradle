@@ -1,1 +1,1 @@
-include ':tutorialsplitcost', ':tutorialnavisimple'
+include ':tutorialsplitcost', ':tutorialnavisimple', ':tutorialmemoapp'
