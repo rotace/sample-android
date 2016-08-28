@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,8 +19,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     private static String TAG = "myApp";
     private SensorManager mSensorManager;
-    private ImageView mImageView;
-    private TextView mTextView;
     private TextView mTextView2;
     private TextView mTextView3;
     private TextView mTextView4;
@@ -80,12 +77,12 @@ public class MainActivity extends Activity implements SensorEventListener {
 
         List<Sensor> sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-        if ( sensors.size() > 0 ){
+        if (sensors.size() > 0) {
             Log.i(TAG, "sensorNo.:" + sensors.size());
             for (Sensor s : sensors) {
                 mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_UI);
                 String typeName = "";
-                switch (s.getType()){
+                switch (s.getType()) {
                     case Sensor.TYPE_ACCELEROMETER:
                         typeName = "TYPE_ACCELEROMETER";
                         break;
@@ -108,7 +105,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                         typeName = "TYPE_GYROSCOPE";
                         break;
                 }
-                Log.i(TAG, s.getName()+ " : "+ s.getType() + " : " + typeName);
+                Log.i(TAG, s.getName() + " : " + s.getType() + " : " + typeName);
             }
         }
 
@@ -125,13 +122,13 @@ public class MainActivity extends Activity implements SensorEventListener {
 
         float value = event.values[0];
 
-        switch(event.sensor.getType()){
+        switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
                 mTextView2.setText("accel");
                 mTextView3.setText(
-                        " x:"+String.format("%.2f",event.values[0])+
-                        " y:"+String.format("%.2f",event.values[1])+
-                        " z:"+String.format("%.2f",event.values[2]));
+                        " x:" + String.format("%.2f", event.values[0]) +
+                                " y:" + String.format("%.2f", event.values[1]) +
+                                " z:" + String.format("%.2f", event.values[2]));
                 break;
             case Sensor.TYPE_PROXIMITY:
                 mTextView4.setText("proximity");
@@ -139,7 +136,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                 break;
             case Sensor.TYPE_LIGHT:
                 mTextView6.setText("light");
-                mTextView7.setText(""+value);
+                mTextView7.setText("" + value);
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
                 break;
@@ -158,4 +155,5 @@ public class MainActivity extends Activity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 }
