@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/apptankcontroller/apptankcontroller.iml" filepath="$PROJECT_DIR$/apptankcontroller/apptankcontroller.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample_android.iml" filepath="$PROJECT_DIR$/sample_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samplenavidrawer/samplenavidrawer.iml" filepath="$PROJECT_DIR$/samplenavidrawer/samplenavidrawer.iml" />
       <module fileurl="file://$PROJECT_DIR$/tutorialmemoapp/tutorialmemoapp.iml" filepath="$PROJECT_DIR$/tutorialmemoapp/tutorialmemoapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/tutorialnavisimple/tutorialnavisimple.iml" filepath="$PROJECT_DIR$/tutorialnavisimple/tutorialnavisimple.iml" />
       <module fileurl="file://$PROJECT_DIR$/tutorialsensor/tutorialsensor.iml" filepath="$PROJECT_DIR$/tutorialsensor/tutorialsensor.iml" />
