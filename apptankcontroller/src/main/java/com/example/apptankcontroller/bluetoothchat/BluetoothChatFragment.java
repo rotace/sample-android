@@ -60,6 +60,11 @@ public class BluetoothChatFragment extends Fragment {
     private ListView mConversationView;
     private EditText mOutEditText;
     private Button mSendButton;
+    private Button mButtonLF;
+    private Button mButtonLB;
+    private Button mButtonRF;
+    private Button mButtonRB;
+    private Button mButtonST;
 
     /**
      * Name of the connected device
@@ -151,6 +156,12 @@ public class BluetoothChatFragment extends Fragment {
         mConversationView = (ListView) view.findViewById(R.id.in);
         mOutEditText = (EditText) view.findViewById(R.id.edit_text_out);
         mSendButton = (Button) view.findViewById(R.id.button_send);
+
+        mButtonLF = (Button) view.findViewById(R.id.buttonLF);
+        mButtonLB = (Button) view.findViewById(R.id.buttonLB);
+        mButtonRF = (Button) view.findViewById(R.id.buttonRF);
+        mButtonRB = (Button) view.findViewById(R.id.buttonRB);
+        mButtonST = (Button) view.findViewById(R.id.ButtonST);
     }
 
     /**
@@ -177,6 +188,41 @@ public class BluetoothChatFragment extends Fragment {
                     String message = textView.getText().toString();
                     sendMessage(message);
                 }
+            }
+        });
+
+        mButtonLF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mButtonLB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mButtonRF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mButtonRB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mButtonST.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage("$C,0,0,*0");
             }
         });
 
