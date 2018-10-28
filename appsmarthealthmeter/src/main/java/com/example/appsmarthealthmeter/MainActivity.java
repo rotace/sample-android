@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String AUTH_PENDING = "auth_state_pending";
     private boolean authInProgress = false;
     private GoogleApiClient mClient = null;
-    private static final String TAG = "logging";
+    private static final String TAG = "Smart_Health";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
