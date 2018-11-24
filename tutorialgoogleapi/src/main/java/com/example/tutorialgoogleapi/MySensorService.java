@@ -39,7 +39,6 @@ public class MySensorService extends FitnessSensorService {
                 .setType(DataSource.TYPE_RAW)
                 .build();
         // 3. Initialize some data structure to keep track of a registration for each sensor.
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public class MySensorService extends FitnessSensorService {
             Log.d(TAG, "emitDataPoints");
             DataPoint mDataPoint = DataPoint.create(mDataSource);
             mDataPoint.setTimestamp(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-            mDataPoint.getValue(Field.FIELD_WEIGHT).setFloat(50.0f);
+            mDataPoint.getValue(Field.FIELD_WEIGHT).setFloat(10.0f);
             List<DataPoint> mDataPointList = new ArrayList<>();
             mDataPointList.add(mDataPoint);
             try {

@@ -17,45 +17,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-    android:background="@android:color/background_light">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="3"
         android:gravity="center"
-        android:layout_weight="3">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Button
-                android:text="LF"
+                android:id="@+id/buttonLF"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/buttonLF"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="LF" />
 
             <TextView
-                android:text="0"
+                android:id="@+id/textViewL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/textViewL"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="0"
                 android:textSize="30sp" />
 
             <Button
-                android:text="LB"
+                android:id="@+id/buttonLB"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/buttonLB"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="LB" />
         </LinearLayout>
 
         <Button
@@ -66,33 +66,33 @@
             android:text="Stop" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Button
-                android:text="RF"
+                android:id="@+id/buttonRF"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/buttonRF"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="RF" />
 
             <TextView
-                android:text="0"
+                android:id="@+id/textViewR"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/textViewR"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="0"
                 android:textSize="30sp" />
 
             <Button
-                android:text="RB"
+                android:id="@+id/buttonRB"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/buttonRB"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="RB" />
         </LinearLayout>
 
     </LinearLayout>
@@ -108,8 +108,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit_text_out"
