@@ -33,8 +33,6 @@ public class MySensorService extends FitnessSensorService {
         mDataSource = new DataSource.Builder()
                 .setAppPackageName(this.getPackageName())
                 .setDataType(DataType.TYPE_WEIGHT)
-//                .setDataType(DataType.TYPE_LOCATION_SAMPLE)
-//                .setDevice(Device.getLocalDevice(this))
                 .setDevice(new Device("manufacturer", "model", "uid", Device.TYPE_SCALE))
                 .setName("my_sensor_name")
                 .setStreamName("my_sensor_stream_name")
@@ -42,26 +40,6 @@ public class MySensorService extends FitnessSensorService {
                 .build();
         // 3. Initialize some data structure to keep track of a registration for each sensor.
 
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Log.d(TAG, "TimerExecute");
-                if (mRequest != null){
-                    Log.d(TAG, "emitDataPoints");
-                    DataPoint mDataPoint = DataPoint.create(mDataSource);
-                    mDataPoint.setTimestamp(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-                    mDataPoint.getValue(Field.FIELD_WEIGHT).setFloat(50.0f);
-                    List<DataPoint> mDataPointList = new ArrayList<>();
-                    mDataPointList.add(mDataPoint);
-                    try {
-                        mRequest.getDispatcher().publish(mDataPointList);
-                    } catch (android.os.RemoteException e){
-                        Log.d(TAG, "RemoteException");
-                    }
-                }
-            }
-        }, 10000, 1000);
     }
 
     @Override
@@ -78,12 +56,24 @@ public class MySensorService extends FitnessSensorService {
         if (hasDataType){
             filteredDataSourceList.add(mDataSource);
         }
-
-
-
-
         // 2. Return those as a list of DataSource objects.
         return filteredDataSourceList;
+    }
+
+    private void emitDataPoints() {
+        if (mRequest != null){
+            Log.d(TAG, "emitDataPoints");
+            DataPoint mDataPoint = DataPoint.create(mDataSource);
+            mDataPoint.setTimestamp(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+            mDataPoint.getValue(Field.FIELD_WEIGHT).setFloat(50.0f);
+            List<DataPoint> mDataPointList = new ArrayList<>();
+            mDataPointList.add(mDataPoint);
+            try {
+                mRequest.getDispatcher().publish(mDataPointList);
+            } catch (android.os.RemoteException e){
+                Log.d(TAG, "RemoteException");
+            }
+        }
     }
 
     @Override
@@ -98,6 +88,15 @@ public class MySensorService extends FitnessSensorService {
                 ) {
             Log.d(TAG, "Registering Success");
             mRequest = request;
+            mTimer = new Timer();
+            mTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Log.d(TAG, "TimerExecute");
+                    emitDataPoints();
+                }
+            }, 10000, 5000);
+
             return true;
         }
         // 4. Configure your sensor according to the request parameters.
@@ -114,8 +113,10 @@ public class MySensorService extends FitnessSensorService {
         // 2. Discard the reference to the registration request object
         if (dataSource.equals(mDataSource)) {
             mRequest = null;
+            mTimer.cancel();
             return true;
         }
+
         return false;
     }
 

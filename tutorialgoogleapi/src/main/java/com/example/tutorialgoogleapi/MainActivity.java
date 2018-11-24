@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.FitnessOptions;
 import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.DataSource;
 import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "SignIn");
         run();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterFitnessDataListener();
     }
 
     private void run(){
@@ -101,9 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "readRequest");
         DataReadRequest readRequest = new DataReadRequest.Builder()
-                .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
                 .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
-                .bucketByTime(1, TimeUnit.DAYS) // deal with IllegalStateException
+                .read(DataType.TYPE_WEIGHT)
                 .build();
 
         Log.d(TAG, "getHistoryClient");
@@ -112,19 +119,23 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DataReadResponse>() {
                     @Override
                     public void onSuccess(DataReadResponse dataReadResponse) {
-                        Log.d(TAG, "onSuccess()");
+                        List<DataSet> dataSets = dataReadResponse.getDataSets();
+                        for (DataSet ds : dataSets){
+                            dumpDataSet(ds);
+                        }
+                        Log.d(TAG, "onSuccess read data.  size: " + dataSets.size());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "onFailure()", e);
+                        Log.e(TAG, "onFailure read data", e);
                     }
                 })
                 .addOnCompleteListener(new OnCompleteListener<DataReadResponse>() {
                     @Override
                     public void onComplete(@NonNull Task<DataReadResponse> task) {
-                        Log.d(TAG, "onComplete()");
+                        Log.d(TAG, "onComplete read data");
                     }
                 });
 
@@ -170,6 +181,44 @@ public class MainActivity extends AppCompatActivity {
                         });
     }
 
+    private static void dumpDataSet(DataSet dataSet) {
+        Log.i(TAG, "Data returned for Data type: " + dataSet.getDataType().getName());
+        DateFormat dateFormat = DateFormat.getDateInstance();
+
+        for (DataPoint dp : dataSet.getDataPoints()) {
+            Log.i(TAG, "Data point:");
+            Log.i(TAG, "\tType: " + dp.getDataType().getName());
+            Log.i(TAG, "\tStart: " + dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
+            Log.i(TAG, "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)));
+            for (Field field : dp.getDataType().getFields()) {
+                Log.i(TAG, "\tField: " + field.getName() + " Value: " + dp.getValue(field));
+            }
+        }
+    }
+
+    private void insertDataSet(DataSet dataSet){
+        Fitness.getHistoryClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .insertData(dataSet)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess insert data");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure insert data");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "onComplete insert data");
+                    }
+                });
+    }
+
     private void registerFitnessDataListener(DataSource dataSource, DataType dataType) {
         // [START register_data_listener]
         mListener =
@@ -180,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
                             Value val = dataPoint.getValue(field);
                             Log.i(TAG, "Detected DataPoint field: " + field.getName());
                             Log.i(TAG, "Detected DataPoint value: " + val);
+                            DataSet dataSet = DataSet.create(dataPoint.getDataSource());
+                            dataSet.add(dataPoint);
+                            insertDataSet(dataSet);
                         }
                     }
                 };
