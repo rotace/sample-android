@@ -8,10 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/appsmarthealthmeter" />
             <option value="$PROJECT_DIR$/apptankcontroller" />
             <option value="$PROJECT_DIR$/samplenavidrawer" />
-            <option value="$PROJECT_DIR$/tutorialgoogleapi" />
             <option value="$PROJECT_DIR$/tutorialmemoapp" />
             <option value="$PROJECT_DIR$/tutorialnavisimple" />
             <option value="$PROJECT_DIR$/tutorialsensor" />
